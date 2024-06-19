@@ -1,4 +1,4 @@
-package WebService;
+package WebServices;
 
 import android.app.ProgressDialog;
 import android.content.Context;

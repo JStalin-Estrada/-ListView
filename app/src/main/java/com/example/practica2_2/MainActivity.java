@@ -1,8 +1,9 @@
 package com.example.practica2_2;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +12,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+import WebServices.Asynchtask;
+import WebServices.WebService;
+
+public class MainActivity extends AppCompatActivity implements Asynchtask {
+    ListView lstOpciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +35,25 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        lstOpciones = findViewById(R.id.lstOpciones);
         Map<String, String> datos = new HashMap<String, String>();
-        WebService.WebService ws= new WebService.WebService("https://reqres.in/api/users",
+        WebService ws = new WebService("https://reqres.in/api/users",
                 datos, MainActivity.this, MainActivity.this);
         ws.execute("GET");
 
-        JSONObject JSONlista = new JSONObject(result);
-        JSONArray JSONlistaUsuarios= JSONlista.getJSONArray("data");
-        lstUsuarios = Usuario.JsonObjectsBuild(JSONlistaUsuarios);
-        AdaptadorUsuario adapatorUsuario = new AdaptadorUsuario(this, lstUsuarios);
-        lstOpciones.setAdapter(adapatorUsuario);
+    }
 
+    @Override
+    public void processFinish(String result) {
+        try {
+            JSONObject JSONlista = new JSONObject(result);
+            JSONArray JSONlistaUsuarios = JSONlista.getJSONArray("data");
+            ArrayList<Usuario> lstUsuarios = Usuario.JsonObjectsBuild(JSONlistaUsuarios);
+            AdaptadorAlumnos adaptador = new AdaptadorAlumnos(this, lstUsuarios);
+            lstOpciones.setAdapter(adaptador);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al procesar los datos JSON de usuarios", Toast.LENGTH_SHORT).show();
+        }
     }
 }
