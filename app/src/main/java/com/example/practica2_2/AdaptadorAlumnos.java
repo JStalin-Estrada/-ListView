@@ -1,4 +1,4 @@
-package com.example.practica2_2;
+package com.example.practica2_2.WebService;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.practica2_2.R;
+import com.example.practica2_2.Usuario;
+
+import java.util.ArrayList;
 
 
-class AdaptadorAlumnos extends ArrayAdapter<Usuario> {
-    public AdaptadorAlumnos(Context context, Usuario[] datos) {
+public class AdaptadorAlumnos extends ArrayAdapter<Usuario> {
+    public AdaptadorAlumnos(Context context, ArrayList<Usuario> datos) {
         super(context, R.layout.lyitem, datos);
     }
     public View getView(int position, View convertView, ViewGroup parent) {

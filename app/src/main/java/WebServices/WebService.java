@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.practica2_2.MainActivity;
-
 import org.json.JSONException;
 
 import java.util.Map;
@@ -44,7 +42,7 @@ public class WebService extends AsyncTask<String, Long, String> {
      * @param activity Actividad de donde se llama el servicio web, para mostrar el cuadro de "Cargando"
      * @param callback CLase a la que se le retornara los datos del servicio web
      */
-    public  WebService(String urlWebService, Map<String, String> data, Context activity, MainActivity callback) {
+    public  WebService(String urlWebService,Map<String, String> data, Context activity, Asynchtask callback) {
         this.url=urlWebService;
         this.datos=data;
         this.actividad=activity;
